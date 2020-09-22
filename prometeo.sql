@@ -24,23 +24,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `prometeo` /*!40100 DEFAULT CHARACTER S
 USE `prometeo`;
 
 --
--- Table structure for table `copy`
---
-
-DROP TABLE IF EXISTS `copy`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `copy` (
-  `clau` text,
-  `SensorID` text,
-  `timestamp` bigint(20) DEFAULT NULL,
-  `temperature` int(11) DEFAULT NULL,
-  `humidity` int(11) DEFAULT NULL,
-  `CO` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `event_types`
 --
 
@@ -158,24 +141,110 @@ CREATE TABLE `fuel_types` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `metrics`
+-- Table structure for table `firefighter_sensor_log`
 --
 
-DROP TABLE IF EXISTS `metrics`;
+DROP TABLE IF EXISTS `firefighter_sensor_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `metrics` (
-  `clau` varchar(80) NOT NULL,
-  `SensorID` varchar(20) NOT NULL,
-  `timestamp` bigint(20) DEFAULT NULL,
-  `temperature` int(11) DEFAULT NULL,
-  `humidity` int(11) DEFAULT NULL,
-  `CO` int(11) DEFAULT NULL,
-  PRIMARY KEY (`clau`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `firefighter_sensor_log` (
+  `timestamp_mins` timestamp NOT NULL,
+  `firefighter_id` VARCHAR(20) NOT NULL,
+  `device_id` VARCHAR(20) DEFAULT NULL,
+  `device_battery_level` FLOAT DEFAULT NULL,
+  `temperature` SMALLINT DEFAULT NULL,
+  `humidity` SMALLINT DEFAULT NULL,
+  `carbon_monoxide` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide` FLOAT DEFAULT NULL,
+  `formaldehyde` FLOAT DEFAULT NULL,
+  `acrolein` FLOAT DEFAULT NULL,
+  `benzene` FLOAT DEFAULT NULL,
+  `device_timestamp` timestamp DEFAULT NULL,
+  `device_status_LED` SMALLINT DEFAULT NULL,
+  PRIMARY KEY (`timestamp_mins`, `firefighter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET= UTF8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/*!40000 ALTER TABLE `metrics` ENABLE KEYS */;
+/*!40000 ALTER TABLE `firefighter_sensor_log` ENABLE KEYS */;
+
+--
+-- Table structure for table `firefighter_sensor_log`
+--
+
+DROP TABLE IF EXISTS `firefighter_status_analytics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `firefighter_status_analytics` (
+  `timestamp_mins` timestamp NOT NULL,
+  `firefighter_id` VARCHAR(20) NOT NULL,
+  `device_id` VARCHAR(20) DEFAULT NULL,
+  `device_battery_level` FLOAT DEFAULT NULL,
+  `temperature` SMALLINT DEFAULT NULL,
+  `humidity` SMALLINT DEFAULT NULL,
+  `device_timestamp` timestamp DEFAULT NULL,
+  `device_status_LED` SMALLINT DEFAULT NULL,
+  `analytics_status_LED` SMALLINT DEFAULT NULL,
+  `carbon_monoxide` FLOAT DEFAULT NULL,
+  `carbon_monoxide_twa_10min` FLOAT DEFAULT NULL,
+  `carbon_monoxide_twa_30min` FLOAT DEFAULT NULL,
+  `carbon_monoxide_twa_60min` FLOAT DEFAULT NULL,
+  `carbon_monoxide_twa_4hr` FLOAT DEFAULT NULL,
+  `carbon_monoxide_twa_8hr` FLOAT DEFAULT NULL,
+  `carbon_monoxide_gauge_10min` SMALLINT DEFAULT NULL,
+  `carbon_monoxide_gauge_30min` SMALLINT DEFAULT NULL,
+  `carbon_monoxide_gauge_60min` SMALLINT DEFAULT NULL,
+  `carbon_monoxide_gauge_4hr` SMALLINT DEFAULT NULL,
+  `carbon_monoxide_gauge_8hr` SMALLINT DEFAULT NULL,
+  `nitrogen_dioxide` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide_twa_10min` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide_twa_30min` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide_twa_60min` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide_twa_4hr` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide_twa_8hr` FLOAT DEFAULT NULL,
+  `nitrogen_dioxide_gauge_10min` SMALLINT DEFAULT NULL,
+  `nitrogen_dioxide_gauge_30min` SMALLINT DEFAULT NULL,
+  `nitrogen_dioxide_gauge_60min` SMALLINT DEFAULT NULL,
+  `nitrogen_dioxide_gauge_4hr` SMALLINT DEFAULT NULL,
+  `nitrogen_dioxide_gauge_8hr` SMALLINT DEFAULT NULL,
+  `formaldehyde` FLOAT DEFAULT NULL,
+  `formaldehyde_twa_10min` FLOAT DEFAULT NULL,
+  `formaldehyde_twa_30min` FLOAT DEFAULT NULL,
+  `formaldehyde_twa_60min` FLOAT DEFAULT NULL,
+  `formaldehyde_twa_4hr` FLOAT DEFAULT NULL,
+  `formaldehyde_twa_8hr` FLOAT DEFAULT NULL,
+  `formaldehyde_gauge_10min` SMALLINT DEFAULT NULL,
+  `formaldehyde_gauge_30min` SMALLINT DEFAULT NULL,
+  `formaldehyde_gauge_60min` SMALLINT DEFAULT NULL,
+  `formaldehyde_gauge_4hr` SMALLINT DEFAULT NULL,
+  `formaldehyde_gauge_8hr` SMALLINT DEFAULT NULL,
+  `acrolein` FLOAT DEFAULT NULL,
+  `acrolein_twa_10min` FLOAT DEFAULT NULL,
+  `acrolein_twa_30min` FLOAT DEFAULT NULL,
+  `acrolein_twa_60min` FLOAT DEFAULT NULL,
+  `acrolein_twa_4hr` FLOAT DEFAULT NULL,
+  `acrolein_twa_8hr` FLOAT DEFAULT NULL,
+  `acrolein_gauge_10min` SMALLINT DEFAULT NULL,
+  `acrolein_gauge_30min` SMALLINT DEFAULT NULL,
+  `acrolein_gauge_60min` SMALLINT DEFAULT NULL,
+  `acrolein_gauge_4hr` SMALLINT DEFAULT NULL,
+  `acrolein_gauge_8hr` SMALLINT DEFAULT NULL,
+  `benzene` FLOAT DEFAULT NULL,
+  `benzene_twa_10min` FLOAT DEFAULT NULL,
+  `benzene_twa_30min` FLOAT DEFAULT NULL,
+  `benzene_twa_60min` FLOAT DEFAULT NULL,
+  `benzene_twa_4hr` FLOAT DEFAULT NULL,
+  `benzene_twa_8hr` FLOAT DEFAULT NULL,
+  `benzene_gauge_10min` SMALLINT DEFAULT NULL,
+  `benzene_gauge_30min` SMALLINT DEFAULT NULL,
+  `benzene_gauge_60min` SMALLINT DEFAULT NULL,
+  `benzene_gauge_4hr` SMALLINT DEFAULT NULL,
+  `benzene_gauge_8hr` SMALLINT DEFAULT NULL,
+  PRIMARY KEY (`timestamp_mins`, `firefighter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET= UTF8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+/*!40000 ALTER TABLE `firefighter_status_analytics` ENABLE KEYS */;
+
 UNLOCK TABLES;
 
 --
