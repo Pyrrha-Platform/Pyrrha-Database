@@ -24,23 +24,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `prometeo` /*!40100 DEFAULT CHARACTER S
 USE `prometeo`;
 
 --
--- Table structure for table `copy`
---
-
-DROP TABLE IF EXISTS `copy`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `copy` (
-  `clau` text DEFAULT NULL,
-  `SensorID` text DEFAULT NULL,
-  `timestamp` bigint(20) DEFAULT NULL,
-  `temperature` int(11) DEFAULT NULL,
-  `humidity` int(11) DEFAULT NULL,
-  `CO` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `event_types`
 --
 
@@ -258,108 +241,6 @@ CREATE TABLE `fuel_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `jstest`
---
-
-DROP TABLE IF EXISTS `jstest`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `jstest` (
-  `jskey` int(11) NOT NULL,
-  `jsrow` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`jskey`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `metrics`
---
-
-DROP TABLE IF EXISTS `metrics`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `metrics` (
-  `clau` varchar(80) NOT NULL,
-  `SensorID` varchar(20) NOT NULL,
-  `timestamp` bigint(20) DEFAULT NULL,
-  `temperature` int(11) DEFAULT NULL,
-  `humidity` int(11) DEFAULT NULL,
-  `CO` int(11) DEFAULT NULL,
-  PRIMARY KEY (`clau`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `metrics_dev`
---
-
-DROP TABLE IF EXISTS `metrics_dev`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `metrics_dev` (
-  `metrics_timestamp` timestamp NOT NULL,
-  `firefighter_id` varchar(20) NOT NULL,
-  `temperature` smallint(6) DEFAULT NULL,
-  `humidity` smallint(6) DEFAULT NULL,
-  `carbon_monoxide` float DEFAULT NULL,
-  `carbon_monoxide_twa_10min` float DEFAULT NULL,
-  `carbon_monoxide_twa_30min` float DEFAULT NULL,
-  `carbon_monoxide_twa_60min` float DEFAULT NULL,
-  `carbon_monoxide_twa_4hr` float DEFAULT NULL,
-  `carbon_monoxide_twa_8hr` float DEFAULT NULL,
-  `carbon_monoxide_gauge_10min` smallint(6) DEFAULT NULL,
-  `carbon_monoxide_gauge_30min` smallint(6) DEFAULT NULL,
-  `carbon_monoxide_gauge_60min` smallint(6) DEFAULT NULL,
-  `carbon_monoxide_gauge_4hr` smallint(6) DEFAULT NULL,
-  `carbon_monoxide_gauge_8hr` smallint(6) DEFAULT NULL,
-  `nitrogen_dioxide` float DEFAULT NULL,
-  `nitrogen_dioxide_twa_10min` float DEFAULT NULL,
-  `nitrogen_dioxide_twa_30min` float DEFAULT NULL,
-  `nitrogen_dioxide_twa_60min` float DEFAULT NULL,
-  `nitrogen_dioxide_twa_4hr` float DEFAULT NULL,
-  `nitrogen_dioxide_twa_8hr` float DEFAULT NULL,
-  `nitrogen_dioxide_gauge_10min` smallint(6) DEFAULT NULL,
-  `nitrogen_dioxide_gauge_30min` smallint(6) DEFAULT NULL,
-  `nitrogen_dioxide_gauge_60min` smallint(6) DEFAULT NULL,
-  `nitrogen_dioxide_gauge_4hr` smallint(6) DEFAULT NULL,
-  `nitrogen_dioxide_gauge_8hr` smallint(6) DEFAULT NULL,
-  `formaldehyde` float DEFAULT NULL,
-  `formaldehyde_twa_10min` float DEFAULT NULL,
-  `formaldehyde_twa_30min` float DEFAULT NULL,
-  `formaldehyde_twa_60min` float DEFAULT NULL,
-  `formaldehyde_twa_4hr` float DEFAULT NULL,
-  `formaldehyde_twa_8hr` float DEFAULT NULL,
-  `formaldehyde_gauge_10min` smallint(6) DEFAULT NULL,
-  `formaldehyde_gauge_30min` smallint(6) DEFAULT NULL,
-  `formaldehyde_gauge_60min` smallint(6) DEFAULT NULL,
-  `formaldehyde_gauge_4hr` smallint(6) DEFAULT NULL,
-  `formaldehyde_gauge_8hr` smallint(6) DEFAULT NULL,
-  `acrolein` float DEFAULT NULL,
-  `acrolein_twa_10min` float DEFAULT NULL,
-  `acrolein_twa_30min` float DEFAULT NULL,
-  `acrolein_twa_60min` float DEFAULT NULL,
-  `acrolein_twa_4hr` float DEFAULT NULL,
-  `acrolein_twa_8hr` float DEFAULT NULL,
-  `acrolein_gauge_10min` smallint(6) DEFAULT NULL,
-  `acrolein_gauge_30min` smallint(6) DEFAULT NULL,
-  `acrolein_gauge_60min` smallint(6) DEFAULT NULL,
-  `acrolein_gauge_4hr` smallint(6) DEFAULT NULL,
-  `acrolein_gauge_8hr` smallint(6) DEFAULT NULL,
-  `benzene` float DEFAULT NULL,
-  `benzene_twa_10min` float DEFAULT NULL,
-  `benzene_twa_30min` float DEFAULT NULL,
-  `benzene_twa_60min` float DEFAULT NULL,
-  `benzene_twa_4hr` float DEFAULT NULL,
-  `benzene_twa_8hr` float DEFAULT NULL,
-  `benzene_gauge_10min` smallint(6) DEFAULT NULL,
-  `benzene_gauge_30min` smallint(6) DEFAULT NULL,
-  `benzene_gauge_60min` smallint(6) DEFAULT NULL,
-  `benzene_gauge_4hr` smallint(6) DEFAULT NULL,
-  `benzene_gauge_8hr` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`metrics_timestamp`,`firefighter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `sensors`
@@ -666,7 +547,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_select_metrics` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_select_firefighter_status_analytics` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -676,14 +557,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_metrics`(
-    IN sensor_id VARCHAR(20),
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_firefighter_status_analytics`(
+    IN firefighter_id VARCHAR(20),
     IN event_date VARCHAR(20),
     IN max INT
     )
 BEGIN
 
-	select FROM_UNIXTIME(floor(m.timestamp/1000),'%Y-%m-%d'), FROM_UNIXTIME(floor(m.timestamp/1000),'%T'), m.SensorID, m.temperature, m.humidity, m.CO   from metrics   m where m.SensorID = sensor_id and FROM_UNIXTIME(floor(m.timestamp/1000),'%Y-%m-%d') = STR_TO_DATE(event_date,'%d,%m,%Y')   order by timestamp desc limit max;
+	select *   from firefighter_status_analytics   a where a.firefighter_id = firefighter_id and DATE(a.timestamp_mins) = DATE(event_date)   order by timestamp_mins desc limit max;
 
     END ;;
 DELIMITER ;
