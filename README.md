@@ -7,19 +7,10 @@ This repository contains the [Prometeo](https://github.com/Code-and-Response/Pro
 ## Setting up the solution
 
 * Create a MariaDB database instance. This one has been set up via a Helm Chart on the IBM Kubernetes service.
-* Create the database
-```sql
-CREATE DATABASE IF NOT EXISTS prometeo character set UTF8mb4 collate utf8mb4_unicode_ci;
-```
+
 * Log into the instance and create the database structure
 ```sql
-mysql> use prometeo;
 mysql> source prometeo.sql
-```
-* Create the stored procedures
-```sql
-mysql> use prometeo;
-mysql> source procedures.sql
 ```
 
 ## Contributing
