@@ -116,8 +116,8 @@ DROP TABLE IF EXISTS `firefighter_sensor_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `firefighter_sensor_log` (
   `timestamp_mins` timestamp NOT NULL,
-  `firefighter_id` varchar(20) NOT NULL,
-  `device_id` varchar(20) DEFAULT NULL,
+  `firefighter_id` varchar(40) NOT NULL,
+  `device_id` varchar(30) DEFAULT NULL,
   `device_battery_level` float DEFAULT NULL,
   `temperature` smallint(6) DEFAULT NULL,
   `humidity` smallint(6) DEFAULT NULL,
@@ -141,8 +141,8 @@ DROP TABLE IF EXISTS `firefighter_status_analytics`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `firefighter_status_analytics` (
   `timestamp_mins` timestamp NOT NULL,
-  `firefighter_id` varchar(20) NOT NULL,
-  `device_id` varchar(20) DEFAULT NULL,
+  `firefighter_id` varchar(40) NOT NULL,
+  `device_id` varchar(30) DEFAULT NULL,
   `device_battery_level` float DEFAULT NULL,
   `temperature` smallint(6) DEFAULT NULL,
   `humidity` smallint(6) DEFAULT NULL,
@@ -217,7 +217,7 @@ DROP TABLE IF EXISTS `firefighters`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `firefighters` (
   `firefighter_id` int(11) NOT NULL AUTO_INCREMENT,
-  `firefighter_code` varchar(20) DEFAULT NULL,
+  `firefighter_code` varchar(40) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `surname` varchar(50) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
@@ -251,7 +251,7 @@ DROP TABLE IF EXISTS `sensors`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sensors` (
   `IntSensorID` int(11) NOT NULL AUTO_INCREMENT,
-  `SensorID` varchar(20) NOT NULL,
+  `SensorID` varchar(30) NOT NULL,
   `model` varchar(20) DEFAULT NULL,
   `version` varchar(20) DEFAULT NULL,
   `deleted_at` varchar(45) DEFAULT NULL,
@@ -489,7 +489,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_device`(
-    IN IntSensorID VARCHAR(20)
+    IN IntSensorID VARCHAR(30)
     )
 BEGIN
 
@@ -558,7 +558,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_firefighter_status_analytics`(
-    IN firefighter_id VARCHAR(20),
+    IN firefighter_id VARCHAR(40),
     IN event_date VARCHAR(20),
     IN max INT
     )
