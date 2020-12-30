@@ -357,7 +357,7 @@ primary:
   service:
     ## Service type
     ##
-    type: NodePort
+    type: ClusterIP
     ## Service port
     ##
     port: 3306
