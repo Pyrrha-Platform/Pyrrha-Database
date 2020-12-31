@@ -8,20 +8,22 @@ This repository contains the [Prometeo](https://github.com/Code-and-Response/Pro
 
 ### Locally using Docker
 
-All commands below use the environment variable MDB_PASSWORD that contains the MariaDB password. You should change it to your own secure password.
+Step 1: Set the environment variable
+All commands shown below use the environment variable MDB_PASSWORD that contains the MariaDB password. You should change it to your own secure password.
 ```
-export MDB_PASSWORD=my-secret-pw
+❯ export MDB_PASSWORD=my-secret-pw
 ```
 
+Step 2: Run the container
 MariaDB is available as an image on [DockerHub](https://hub.docker.com/_/mariadb/). Use the following command to download the image and run a container. The command also mounts the following directories to persist the data and store the data configuration:
 - $PWD/data:/home - load the sql dump
 - $PWD/mdbdata:/var/lib/mysql - store data
 - $PWD/mdbconfig:/etc/mysql/conf.d - store configuration
 
-If you use `mdbdata` or `mdbconfig`, you will have to create the directories.
+If you use `mdbdata` and `mdbconfig`, you will have to create the directories. 
 
 ```
-docker run --name mariadb -v $PWD/data:/home -v $PWD/mdbdata:/var/lib/mysql -v $PWD/mdbconfig:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=${MDB_PASSWORD} -p 3306:3306 -d mariadb
+❯ docker run --name mariadb -v $PWD/data:/home -v $PWD/mdbdata:/var/lib/mysql -v $PWD/mdbconfig:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=${MDB_PASSWORD} -p 3306:3306 -d mariadb
 ```
 
 You can check the sql file was mounted by using the following command:
@@ -44,16 +46,19 @@ You can now execute mysql commands as shown here:
 +--------------------+
 ```
 
+Step 3: Load the sql data
+
 Set the `log_bin_trust_function_creators` flag to 1 in order to successfully create the stored procedures without having a SUPER privilege.
 ```
 ❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'SET GLOBAL log_bin_trust_function_creators = 1;'
 ```
 
-
 You can now load the .sql file as follows:
 ```
-docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /home/prometeo.sql;'
+❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /home/prometeo.sql;'
 ```
+
+Step 4: Verify the database
 
 You should be able to see the Prometeo database:
 
@@ -95,7 +100,7 @@ You are ready to go! You can talk to the database by using localhost:3306.
 
 ### IKS (IBM Kubernetes Service)
 
-Step 1: Sign up for [IBM Cloud](https://cloud.ibm.com/registration) if you don't have an account already.
+Step 1: Sign up for [IBM Cloud](https://cloud.ibm.com/registration) or log in with your existing account.
 
 Step 2: Create an IBM Kubernetes Cluster (IKS) from the [catalog](https://cloud.ibm.com/kubernetes/catalog/create).
 
@@ -105,28 +110,28 @@ Step 4: Log into your cluster by following these [steps](https://cloud.ibm.com/d
 
 You can verify that you have the correct context by using this command:
 ```
-kubectl config current-context
+❯ kubectl config current-context
 ```
 You should see an output like `<cluster_name>/<cluster_ID>`.
 
 Step 5: Add password to `kubernetes/mariadb-secret.yaml` file. You need to get the base 64 encoded password first by using the following command:
 ```
-echo -n ${MDB_PASSWORD} | base64
+❯ echo -n ${MDB_PASSWORD} | base64
 ```
-There are three passwords in the secret yaml file
+There are three passwords in the secret yaml file. You can create different passwords for each one.
 - mariadb-root-password:
 - mariadb-replication-password:
 - mariadb-user-password:
 
-Step 6: Add bitnami helm repo
+Step 6: Add bitnami helm repo locally
 ```
-helm repo add bitnami https://charts.bitnami.com/bitnami
+❯ helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
-Step 7: Apply the secret file `kubernetes/mariadb-secret.yaml`. The pods will not run unless you apply this secret with the correct base64 encoded credentials.
+Step 7: Apply the secret file `kubernetes/mariadb-secret-sample.yaml`. The pods will not run unless you apply this secret with the correct base64 encoded credentials.
 
 ```
-kubectl apply -f kubernetes/mariadb-secret.yaml
+❯ kubectl apply -f kubernetes/mariadb-secret-sample.yaml
 secret/mariadb created
 ```
 You can verify that the secret was created successfully.
@@ -153,7 +158,8 @@ NOTES:
 Please be patient while the chart is being deployed
 ```
 
-You should see the primary and secondary pods running now:
+You should see the primary and secondary pods running after some time. The chart first creates the persistent volume claims first before creatings the pods and services
+
 ```
 ❯ kubectl get pods
 NAME                  READY   STATUS    RESTARTS   AGE
@@ -161,10 +167,10 @@ mariadb-primary-0     1/1     Running   0          8m18s
 mariadb-secondary-0   1/1     Running   0          8m18s
 ```
 
-Step 9: Load the prometeo sql data to the primary pod.
+Step 9: Copy the sql data file to the primary pod.
 
 ```
-  kubectl cp data/prometeo.sql mariadb-primary-0:/tmp/prometeo.sql
+❯ kubectl cp data/prometeo.sql mariadb-primary-0:/tmp/prometeo.sql
 ```
 
 Check if the file is present in the container
@@ -177,19 +183,20 @@ Step 10: Load the data into the database.
 
 First, set permissions so your can load the sql without having root privileges:
 ```
-kubectl exec mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'SET GLOBAL log_bin_trust_function_creators = 1;'
+❯ kubectl exec mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'SET GLOBAL log_bin_trust_function_creators = 1;'
 ```
 
 Next, load the sql file
 ```
-kubectl exec -it mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'source /tmp/prometeo.sql;'
-  ```
+❯ kubectl exec -it mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'source /tmp/prometeo.sql;'
+```
 
 You just deployed MariaDB On IBM Cloud Kubernetes Services and loaded the prometeo tables and stored procedures. You can see the tables with the following command:
 
 ```
-kubectl exec mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'use prometeo; show tables'
+❯ kubectl exec mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'use prometeo; show tables'
 ```
+
 ```
 Tables_in_prometeo
 event_types
