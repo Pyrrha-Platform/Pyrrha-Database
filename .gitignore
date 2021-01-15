@@ -1,2 +1,6 @@
+mariadb-secret.yaml
+.vscode
 prometeo-08.03.20.sql
 prometeo-13.10.20.sql
+prometeo-*.sql
+.DS_Store
