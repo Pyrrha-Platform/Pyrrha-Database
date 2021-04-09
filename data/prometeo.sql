@@ -1,13 +1,13 @@
--- MariaDB dump 10.17  Distrib 10.5.5-MariaDB, for osx10.15 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for osx10.15 (x86_64)
 --
--- Host: 159.122.237.12    Database: prometeo
+-- Host: 159.122.237.4    Database: prometeo
 -- ------------------------------------------------------
--- Server version	10.3.23-MariaDB-log
+-- Server version	5.5.5-10.3.23-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,12 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `prometeo`
+-- Table structure for table `copy`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `prometeo` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `prometeo`;
+DROP TABLE IF EXISTS `copy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `copy` (
+  `clau` text DEFAULT NULL,
+  `SensorID` text DEFAULT NULL,
+  `timestamp` bigint(20) DEFAULT NULL,
+  `temperature` int(11) DEFAULT NULL,
+  `humidity` int(11) DEFAULT NULL,
+  `CO` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `event_types`
@@ -29,7 +38,7 @@ USE `prometeo`;
 
 DROP TABLE IF EXISTS `event_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_types` (
   `event_type` int(11) NOT NULL,
   `event_description` varchar(20) NOT NULL,
@@ -44,7 +53,7 @@ CREATE TABLE `event_types` (
 
 DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
   `event_internal_id` int(11) NOT NULL AUTO_INCREMENT,
   `event_code` varchar(20) DEFAULT NULL,
@@ -73,7 +82,7 @@ CREATE TABLE `events` (
 
 DROP TABLE IF EXISTS `events_firefighters_devices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_firefighters_devices` (
   `event_internal_id` int(11) NOT NULL,
   `firefighter_id` int(11) NOT NULL,
@@ -93,7 +102,7 @@ CREATE TABLE `events_firefighters_devices` (
 
 DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `feedback` (
   `firefighter_id` int(11) NOT NULL,
   `fire_id` int(11) NOT NULL,
@@ -113,7 +122,7 @@ CREATE TABLE `feedback` (
 
 DROP TABLE IF EXISTS `firefighter_sensor_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `firefighter_sensor_log` (
   `timestamp_mins` timestamp NOT NULL,
   `firefighter_id` varchar(40) NOT NULL,
@@ -138,7 +147,7 @@ CREATE TABLE `firefighter_sensor_log` (
 
 DROP TABLE IF EXISTS `firefighter_status_analytics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `firefighter_status_analytics` (
   `timestamp_mins` timestamp NOT NULL,
   `firefighter_id` varchar(40) NOT NULL,
@@ -214,7 +223,7 @@ CREATE TABLE `firefighter_status_analytics` (
 
 DROP TABLE IF EXISTS `firefighters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `firefighters` (
   `firefighter_id` int(11) NOT NULL AUTO_INCREMENT,
   `firefighter_code` varchar(40) DEFAULT NULL,
@@ -223,7 +232,7 @@ CREATE TABLE `firefighters` (
   `email` varchar(40) DEFAULT NULL,
   `deleted_at` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`firefighter_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +241,7 @@ CREATE TABLE `firefighters` (
 
 DROP TABLE IF EXISTS `fuel_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fuel_types` (
   `fuel_type` int(11) NOT NULL,
   `fuel_description` varchar(20) NOT NULL,
@@ -241,6 +250,108 @@ CREATE TABLE `fuel_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `jstest`
+--
+
+DROP TABLE IF EXISTS `jstest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jstest` (
+  `jskey` int(11) NOT NULL,
+  `jsrow` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`jskey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `metrics`
+--
+
+DROP TABLE IF EXISTS `metrics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `metrics` (
+  `clau` varchar(80) NOT NULL,
+  `SensorID` varchar(30) NOT NULL,
+  `timestamp` bigint(20) DEFAULT NULL,
+  `temperature` int(11) DEFAULT NULL,
+  `humidity` int(11) DEFAULT NULL,
+  `CO` int(11) DEFAULT NULL,
+  PRIMARY KEY (`clau`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `metrics_dev`
+--
+
+DROP TABLE IF EXISTS `metrics_dev`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `metrics_dev` (
+  `metrics_timestamp` timestamp NOT NULL,
+  `firefighter_id` varchar(40) NOT NULL,
+  `temperature` smallint(6) DEFAULT NULL,
+  `humidity` smallint(6) DEFAULT NULL,
+  `carbon_monoxide` float DEFAULT NULL,
+  `carbon_monoxide_twa_10min` float DEFAULT NULL,
+  `carbon_monoxide_twa_30min` float DEFAULT NULL,
+  `carbon_monoxide_twa_60min` float DEFAULT NULL,
+  `carbon_monoxide_twa_4hr` float DEFAULT NULL,
+  `carbon_monoxide_twa_8hr` float DEFAULT NULL,
+  `carbon_monoxide_gauge_10min` smallint(6) DEFAULT NULL,
+  `carbon_monoxide_gauge_30min` smallint(6) DEFAULT NULL,
+  `carbon_monoxide_gauge_60min` smallint(6) DEFAULT NULL,
+  `carbon_monoxide_gauge_4hr` smallint(6) DEFAULT NULL,
+  `carbon_monoxide_gauge_8hr` smallint(6) DEFAULT NULL,
+  `nitrogen_dioxide` float DEFAULT NULL,
+  `nitrogen_dioxide_twa_10min` float DEFAULT NULL,
+  `nitrogen_dioxide_twa_30min` float DEFAULT NULL,
+  `nitrogen_dioxide_twa_60min` float DEFAULT NULL,
+  `nitrogen_dioxide_twa_4hr` float DEFAULT NULL,
+  `nitrogen_dioxide_twa_8hr` float DEFAULT NULL,
+  `nitrogen_dioxide_gauge_10min` smallint(6) DEFAULT NULL,
+  `nitrogen_dioxide_gauge_30min` smallint(6) DEFAULT NULL,
+  `nitrogen_dioxide_gauge_60min` smallint(6) DEFAULT NULL,
+  `nitrogen_dioxide_gauge_4hr` smallint(6) DEFAULT NULL,
+  `nitrogen_dioxide_gauge_8hr` smallint(6) DEFAULT NULL,
+  `formaldehyde` float DEFAULT NULL,
+  `formaldehyde_twa_10min` float DEFAULT NULL,
+  `formaldehyde_twa_30min` float DEFAULT NULL,
+  `formaldehyde_twa_60min` float DEFAULT NULL,
+  `formaldehyde_twa_4hr` float DEFAULT NULL,
+  `formaldehyde_twa_8hr` float DEFAULT NULL,
+  `formaldehyde_gauge_10min` smallint(6) DEFAULT NULL,
+  `formaldehyde_gauge_30min` smallint(6) DEFAULT NULL,
+  `formaldehyde_gauge_60min` smallint(6) DEFAULT NULL,
+  `formaldehyde_gauge_4hr` smallint(6) DEFAULT NULL,
+  `formaldehyde_gauge_8hr` smallint(6) DEFAULT NULL,
+  `acrolein` float DEFAULT NULL,
+  `acrolein_twa_10min` float DEFAULT NULL,
+  `acrolein_twa_30min` float DEFAULT NULL,
+  `acrolein_twa_60min` float DEFAULT NULL,
+  `acrolein_twa_4hr` float DEFAULT NULL,
+  `acrolein_twa_8hr` float DEFAULT NULL,
+  `acrolein_gauge_10min` smallint(6) DEFAULT NULL,
+  `acrolein_gauge_30min` smallint(6) DEFAULT NULL,
+  `acrolein_gauge_60min` smallint(6) DEFAULT NULL,
+  `acrolein_gauge_4hr` smallint(6) DEFAULT NULL,
+  `acrolein_gauge_8hr` smallint(6) DEFAULT NULL,
+  `benzene` float DEFAULT NULL,
+  `benzene_twa_10min` float DEFAULT NULL,
+  `benzene_twa_30min` float DEFAULT NULL,
+  `benzene_twa_60min` float DEFAULT NULL,
+  `benzene_twa_4hr` float DEFAULT NULL,
+  `benzene_twa_8hr` float DEFAULT NULL,
+  `benzene_gauge_10min` smallint(6) DEFAULT NULL,
+  `benzene_gauge_30min` smallint(6) DEFAULT NULL,
+  `benzene_gauge_60min` smallint(6) DEFAULT NULL,
+  `benzene_gauge_4hr` smallint(6) DEFAULT NULL,
+  `benzene_gauge_8hr` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`metrics_timestamp`,`firefighter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `sensors`
@@ -248,7 +359,7 @@ CREATE TABLE `fuel_types` (
 
 DROP TABLE IF EXISTS `sensors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sensors` (
   `IntSensorID` int(11) NOT NULL AUTO_INCREMENT,
   `SensorID` varchar(30) NOT NULL,
@@ -265,7 +376,7 @@ CREATE TABLE `sensors` (
 
 DROP TABLE IF EXISTS `status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status` (
   `statusid` int(11) NOT NULL,
   `status_description` varchar(20) NOT NULL,
@@ -280,7 +391,7 @@ CREATE TABLE `status` (
 
 DROP TABLE IF EXISTS `user_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_types` (
   `user_type` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(20) DEFAULT NULL,
@@ -295,7 +406,7 @@ CREATE TABLE `user_types` (
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
@@ -307,10 +418,6 @@ CREATE TABLE `users` (
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`user_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping events for database 'prometeo'
---
 
 --
 -- Dumping routines for database 'prometeo'
@@ -486,7 +593,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_device`(
     IN IntSensorID VARCHAR(30)
@@ -547,7 +654,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_select_firefighter_status_analytics` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_select_metrics` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -555,16 +662,16 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_firefighter_status_analytics`(
-    IN firefighter_id VARCHAR(40),
+CREATE DEFINER=`root`@`%` PROCEDURE `sp_select_metrics`(
+    IN sensor_id VARCHAR(30),
     IN event_date VARCHAR(20),
     IN max INT
     )
 BEGIN
 
-	select *   from firefighter_status_analytics   a where a.firefighter_id = firefighter_id and DATE(a.timestamp_mins) = DATE(event_date)   order by timestamp_mins desc limit max;
+	select FROM_UNIXTIME(floor(m.timestamp/1000),'%Y-%m-%d'), FROM_UNIXTIME(floor(m.timestamp/1000),'%T'), m.SensorID, m.temperature, m.humidity, m.CO   from metrics   m where m.SensorID = sensor_id and FROM_UNIXTIME(floor(m.timestamp/1000),'%Y-%m-%d') = STR_TO_DATE(event_date,'%d,%m,%Y')   order by timestamp desc limit max;
 
     END ;;
 DELIMITER ;
@@ -582,4 +689,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-13 15:03:15
+-- Dump completed on 2021-04-09  8:54:01
