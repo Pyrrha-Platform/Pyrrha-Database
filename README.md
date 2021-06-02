@@ -1,6 +1,6 @@
-# Prometeo database
+# Pyrrha database
 
-This repository contains the [Prometeo](https://github.com/Code-and-Response/Prometeo) solution application database that manages sensor readings over time. It targets MariaDB.
+This repository contains the [Pyrrha](https://github.com/Code-and-Response/Prometeo) solution application database that manages sensor readings over time. It targets MariaDB.
 
 [![License](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Slack](https://img.shields.io/badge/Join-Slack-blue)](https://callforcode.org/slack)
 
@@ -30,7 +30,7 @@ You can check the sql file was mounted by using the following command:
 
 ```
 ❯ docker exec -it mariadb ls /home
-prometeo.sql
+pyrrha.sql
 ```
 
 You can now execute mysql commands as shown here:
@@ -55,12 +55,12 @@ Set the `log_bin_trust_function_creators` flag to 1 in order to successfully cre
 
 You can now load the .sql file as follows:
 ```
-❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /home/prometeo.sql;'
+❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /home/pyrrha.sql;'
 ```
 
 Step 4: Verify the database
 
-You should be able to see the Prometeo database:
+You should be able to see the Pyrrha database:
 
 ```
 ❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'show databases;'
@@ -71,15 +71,15 @@ You should be able to see the Prometeo database:
 | information_schema |
 | mysql              |
 | performance_schema |
-| prometeo           |
+| pyrrha             |
 +--------------------+
 ```
 
-You can also list all the tables in the prometeo database:
+You can also list all the tables in the pyrrha database:
 ```
-❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'use prometeo; show tables;'
+❯ docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'use pyrrha; show tables;'
 +------------------------------+
-| Tables_in_prometeo           |
+| Tables_in_pyrrha             |
 +------------------------------+
 | event_types                  |
 | events                       |
@@ -170,13 +170,13 @@ mariadb-secondary-0   1/1     Running   0          8m18s
 Step 9: Copy the sql data file to the primary pod.
 
 ```
-❯ kubectl cp data/prometeo.sql mariadb-primary-0:/tmp/prometeo.sql
+❯ kubectl cp data/pyrrha.sql mariadb-primary-0:/tmp/pyrrha.sql
 ```
 
 Check if the file is present in the container
 ```
 ❯ kubectl exec -it mariadb-primary-0 -- ls /tmp
-prometeo.sql
+pyrrha.sql
 ```
 
 Step 10: Load the data into the database.
@@ -188,17 +188,17 @@ First, set permissions so your can load the sql without having root privileges:
 
 Next, load the sql file
 ```
-❯ kubectl exec -it mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'source /tmp/prometeo.sql;'
+❯ kubectl exec -it mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'source /tmp/pyrrha.sql;'
 ```
 
-You just deployed MariaDB On IBM Cloud Kubernetes Services and loaded the prometeo tables and stored procedures. You can see the tables with the following command:
+You just deployed MariaDB On IBM Cloud Kubernetes Services and loaded the pyrrha tables and stored procedures. You can see the tables with the following command:
 
 ```
-❯ kubectl exec mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'use prometeo; show tables'
+❯ kubectl exec mariadb-primary-0 -- mysql -uroot -p${MDB_PASSWORD} -e 'use pyrrha; show tables'
 ```
 
 ```
-Tables_in_prometeo
+Tables_in_pyrrha
 event_types
 events
 events_firefighters_devices
@@ -233,7 +233,7 @@ kubectl delete secret mariadb
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting Prometeo pull requests.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting Pyrrha pull requests.
 
 ## License
 
