@@ -1,6 +1,6 @@
 # Pyrrha database
 
-This repository contains the [Pyrrha](https://github.com/Code-and-Response/Prometeo) solution application database that manages sensor readings over time. It targets MariaDB.
+This repository contains the [Pyrrha](https://github.com/Pyrrha-Platform/Pyrrha) solution application database that manages sensor readings over time. It targets MariaDB.
 
 [![License](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Slack](https://img.shields.io/badge/Join-Slack-blue)](https://callforcode.org/slack)
 
