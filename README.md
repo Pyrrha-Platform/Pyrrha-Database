@@ -12,7 +12,7 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
 1. Git clone this repo and change into root directory
    
    ```
-   git clone https://github.com/Pyrrha-Platform/Pyrrha-MQTT-Client && cd Pyrrha-MQTT-Client
+   git clone https://github.com/Pyrrha-Platform/Pyrrha-Database && cd Pyrrha-Database
    ```
    
 2. Set the environment variable
