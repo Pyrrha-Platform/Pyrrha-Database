@@ -7,17 +7,24 @@ This repository contains the [Pyrrha](https://github.com/Pyrrha-Platform/Pyrrha)
 ## Setting up the solution
 
 ### Locally using Docker
+The following steps assume you have [Git](https://git-scm.com/) and [Docker](https://www.docker.com/) installed on your machine.
 
-1. Set the environment variable
+1. Git clone this repo and change into root directory
+   
+   ```
+   git clone https://github.com/Pyrrha-Platform/Pyrrha-MQTT-Client && cd Pyrrha-MQTT-Client
+   ```
+   
+2. Set the environment variable
    
    All commands shown below use the environment variable MDB_PASSWORD that contains the MariaDB password. You should change it to your own secure password.
     ```
     export MDB_PASSWORD=my-secret-pw
     ```
 
-2. Run the container
+3. Run the container
 
-    MariaDB is available as an image on [DockerHub](https://hub.docker.com/_/mariadb/). Use the following command to download the image and run a container that listens on port 3306. The command also mounts the `$PWD/data` directory to `/var/lib/mysql`. This makes it easier to load data later.
+    MariaDB is available as an image on [DockerHub](https://hub.docker.com/_/mariadb/). Use the following command to download the image and run a container that listens on port 3306. The command also mounts the `data` directory in the cloned repository to `/var/lib/mysql`. This makes it easier to load data later.
     
     ```
     docker run --name mariadb -v $PWD/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MDB_PASSWORD} -p 3306:3306 -d mariadb
@@ -37,11 +44,15 @@ This repository contains the [Pyrrha](https://github.com/Pyrrha-Platform/Pyrrha)
     docker run --name mariadb -v $PWD/data:/var/lib/mysql:Z -e MYSQL_ROOT_PASSWORD=${MDB_PASSWORD} -p 3306:3306 -d mariadb
     ```
 
-3. Confirm container started properly
+4. Confirm container started properly
 
     You can confirm the container is running by using the `docker ps` command:
     ```
-    ❯ docker ps                                                                            
+    docker ps                                                                            
+    ```
+    
+    Output:
+    ```
     CONTAINER ID  IMAGE                             COMMAND               CREATED         STATUS             PORTS                   NAMES                            ws
     9f16930dcb23  docker.io/library/mariadb:latest  mysqld                11 minutes ago  Up 11 minutes ago  0.0.0.0:3306->3306/tcp  mariadb
     ```
@@ -78,7 +89,7 @@ This repository contains the [Pyrrha](https://github.com/Pyrrha-Platform/Pyrrha)
     +--------------------+
     ```
 
-1. Load the sql data
+5. Load the sql data
 
     Set the `log_bin_trust_function_creators` flag to 1 in order to successfully create the stored procedures without having a SUPER privilege.
     ```
@@ -90,7 +101,7 @@ This repository contains the [Pyrrha](https://github.com/Pyrrha-Platform/Pyrrha)
     docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /var/lib/mysql/prometeo.sql;'
     ```
 
-2. Verify the database
+6. Verify the database
 
     You should be able to see the Prometeo database:
 
