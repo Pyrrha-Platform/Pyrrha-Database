@@ -82,7 +82,6 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     +--------------------+
     | Database           |
     +--------------------+
-    | data               |
     | information_schema |
     | mysql              |
     | performance_schema |
@@ -114,7 +113,6 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     +--------------------+
     | Database           |
     +--------------------+
-    | data               |
     | information_schema |
     | mysql              |
     | performance_schema |
@@ -146,7 +144,8 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     | users                        |
     +------------------------------+
     ```
-
+7. Use mysql (OPTIONAL)
+    
     You are ready to go! You can talk to the database by using localhost:3306. If you have `mysql` available on the host machine, use the following command to connect:
     ```
     mysql -u root -p${MDB_PASSWORD} --host localhost --port 3306 --protocol=tcp
