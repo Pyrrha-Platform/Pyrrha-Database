@@ -6,6 +6,6 @@ prometeo-*.sql
 pyrrha-*.sql
 .DS_Store
 
-data/
+data/*
 !data/prometeo.sql
 !data/pyrrha.sql
