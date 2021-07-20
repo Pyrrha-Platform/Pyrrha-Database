@@ -63,10 +63,10 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     docker exec -it mariadb ls /var/lib/mysql
     ```
 
-    You should see `prometeo.sql` file along with other mariadb files in the output:
+    You should see `pyrrha.sql` file along with other mariadb files in the output:
 
     ```
-    aria_log.00000001  ib_logfile0  multi-master.info   prometeo.sql
+    aria_log.00000001  ib_logfile0  multi-master.info   pyrrha.sql
     aria_log_control   ibdata1      mysql
     ib_buffer_pool     ibtmp1       performance_schema
 
@@ -97,12 +97,12 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
 
     You can now load the .sql file as follows:
     ```
-    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /var/lib/mysql/prometeo.sql;'
+    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /var/lib/mysql/pyrrha.sql;'
     ```
 
 6. Verify the database
 
-    You should be able to see the Prometeo database:
+    You should be able to see the Pyrrha database:
 
     ```
     docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'show databases;'
@@ -116,19 +116,19 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     | information_schema |
     | mysql              |
     | performance_schema |
-    | prometeo           |
+    | pyrrha           |
     +--------------------+
     ```
 
     You can also list all the tables in the pyrrha database:
     ```
-    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'use prometeo; show tables;'
+    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'use pyrrha; show tables;'
     ```
 
     Output:
     ```
     +------------------------------+
-    | Tables_in_prometeo           |
+    | Tables_in_pyrrha           |
     +------------------------------+
     | event_types                  |
     | events                       |
