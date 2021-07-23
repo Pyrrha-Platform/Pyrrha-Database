@@ -4,6 +4,15 @@ This repository contains the [Pyrrha](https://github.com/Pyrrha-Platform/Pyrrha)
 
 [![License](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Slack](https://img.shields.io/badge/Join-Slack-blue)](https://callforcode.org/slack)
 
+- [Setting up the solution](#setting-up-the-solution)
+  - [Locally using Docker](#locally-using-docker)
+  - [IKS (IBM Kubernetes Service)](#iks-ibm-kubernetes-service)
+- [Troubleshooting](#troubleshooting)
+  - [Changing password](#changing-password)
+- [Uninstall MariaDB](#uninstall-mariadb)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Setting up the solution
 
 ### Locally using Docker
@@ -265,6 +274,56 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     users
     ```
 
+## Troubleshooting
+### Changing password
+
+1. Log into mariadb using your current root password.
+   ```
+   ❯ mysql -u root -pcurrentpassword --host localhost --port 3306 --protocol tcp
+   ```
+2. Change password for the root user
+   ```
+   UPDATE mysql.user SET Password=PASSWORD('Test@123$') WHERE User='root';
+   ```
+3. Flush privileges
+   ```
+   flush privileges;
+   ```
+4. Exit the shell
+   ```
+   exit;
+   ```
+5. You now need to change the password in the secret used by MariaDB. You need to know the name of the secret.
+   ```
+   ❯ kubectl get secret | grep mariadb                        
+    mariadbxx-xxxx-xx Opaque 2 366d
+
+   ```
+   The describe command will show us the content of this seret
+
+    ```
+    ❯ kubectl describe secret mariadbxx-xxxx-xx          
+    Name:         mariadbxx-xxxx-xx
+    ...
+    ...
+    Data
+    ====
+    mariadb-replication-password:  10 bytes
+    mariadb-root-password:         12 bytes
+
+    ```
+    You can now update this secret with the new password:
+    ```
+    ❯ kubectl create secret generic mariadbxx-xxxx-xx --from-literal=mariadb-root-password=Test@123$ --dry-run -o yaml \
+    | kubectl apply -f -
+    ```
+    
+6. You can similarly change the other cluster secrets that use this password. The example below updates secret called `rulesdecision-secret` with the new password:
+
+    ```
+    kubectl create secret generic rulesdecision-secret --from-literal=MARIADB_PASSWORD=Test@123$ --dry-run -o yaml \
+    | kubectl apply -f -
+    ```
 ## Uninstall MariaDB
 1. Remove the helm chart
     ```
