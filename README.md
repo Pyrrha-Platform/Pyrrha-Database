@@ -31,9 +31,16 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     export MDB_PASSWORD=my-secret-pw
     ```
 
-3. Run the container
+3. Build the container
+   
+   MariaDB is available as an image on [DockerHub](https://hub.docker.com/_/mariadb/). The Dockerfile in this repository uses that as the base image. Run the following command to build the Pyrrha mariadb component:
+   ```
+   docker build -t mariadb .
+   ```
 
-    MariaDB is available as an image on [DockerHub](https://hub.docker.com/_/mariadb/). Use the following command to download the image and run a container that listens on port 3306. The command also mounts the `data` directory in the cloned repository to `/var/lib/mysql`. This makes it easier to load data later.
+4. Run the container
+
+     Use the following command to download the image and run a container that listens on port 3306. The command also mounts the `data` directory in the cloned repository to `/var/lib/mysql`. This makes it easier to access the data files in your host system.
     
     ```
     docker run --name mariadb -v $PWD/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MDB_PASSWORD} -p 3306:3306 -d mariadb
@@ -53,63 +60,7 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     docker run --name mariadb -v $PWD/data:/var/lib/mysql:Z -e MYSQL_ROOT_PASSWORD=${MDB_PASSWORD} -p 3306:3306 -d mariadb
     ```
 
-4. Confirm container started properly
-
-    You can confirm the container is running by using the `docker ps` command:
-    ```
-    docker ps                                                                            
-    ```
-    
-    Output:
-    ```
-    CONTAINER ID  IMAGE                             COMMAND               CREATED         STATUS             PORTS                   NAMES                            ws
-    9f16930dcb23  docker.io/library/mariadb:latest  mysqld                11 minutes ago  Up 11 minutes ago  0.0.0.0:3306->3306/tcp  mariadb
-    ```
-    
-    You can check the sql file was mounted by using the following command:
-
-    ```
-    docker exec -it mariadb ls /var/lib/mysql
-    ```
-
-    You should see `pyrrha.sql` file along with other mariadb files in the output:
-
-    ```
-    aria_log.00000001  ib_logfile0  multi-master.info   pyrrha.sql
-    aria_log_control   ibdata1      mysql
-    ib_buffer_pool     ibtmp1       performance_schema
-
-    ```
-
-    You can now execute mysql commands as shown here:
-    ```
-    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'show databases;'
-    ```
-
-    Output: 
-    ```
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | information_schema |
-    | mysql              |
-    | performance_schema |
-    +--------------------+
-    ```
-
-5. Load the sql data
-
-    Set the `log_bin_trust_function_creators` flag to 1 in order to successfully create the stored procedures without having a SUPER privilege.
-    ```
-    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'SET GLOBAL log_bin_trust_function_creators = 1;'
-    ```
-
-    You can now load the .sql file as follows:
-    ```
-    docker exec -t mariadb mysql -uroot -p${MDB_PASSWORD} -e 'source /var/lib/mysql/pyrrha.sql;'
-    ```
-
-6. Verify the database
+5. Verify the database
 
     You should be able to see the Pyrrha database:
 
@@ -153,7 +104,7 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
     | users                        |
     +------------------------------+
     ```
-7. Use mysql (OPTIONAL)
+6. Use mysql (OPTIONAL)
     
     You are ready to go! You can talk to the database by using localhost:3306. If you have `mysql` available on the host machine, use the following command to connect:
     ```
