@@ -5,10 +5,7 @@ on:
   push:
     branches:
       - "**"
-  # Execute on every pull request to the master branch
-  pull_request_target:
-    branches:
-      - main
+
 
 jobs:
   linter:
