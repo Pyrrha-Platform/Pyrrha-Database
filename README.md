@@ -201,13 +201,13 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
 9. Copy the SQL data file to the primary pod.
 
    ```bash
-   kubectl cp data/pyrrha.sql mariadb-primary-0:/tmp/pyrrha.sql
+   kubectl cp data-seed/pyrrha.sql mariadb-primary-0:/tmp/pyrrha.sql
    ```
 
    Check if the file is present in the container
 
    ```bash
-   kubectl exec -it mariadb-primary-0 -- ls /tmp
+   kubectl exec -it mariadb-primary-0 -- ls -lta /tmp
 
    pyrrha.sql
    ```
