@@ -126,7 +126,7 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
 
 2. Create an IBM Kubernetes Cluster (IKS) from the [catalog](https://cloud.ibm.com/kubernetes/catalog/create).
 
-3. Add [IBM Cloud Block Storage plug-in](https://cloud.ibm.com/catalog/content/ibmcloud-block-storage-plugin-51baa72d-be9b-487a-8e77-02577d2b5b21-global) from the catalog to your cluster in the default namespace. You need this plugin to use persistance volumes and persistance volume claims on IKS.
+3. New clusters automatically provision the `Block Storage for VPC` plugin for you. `Deprecated`: for older clusters, add [IBM Cloud Block Storage plug-in](https://cloud.ibm.com/catalog/content/ibmcloud-block-storage-plugin-51baa72d-be9b-487a-8e77-02577d2b5b21-global) from the catalog to your cluster in the default namespace. You need this plugin to use persistance volumes and persistance volume claims on IKS. 
 
 4. Log into your cluster by following these [steps](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster)
 
