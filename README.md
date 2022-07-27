@@ -109,6 +109,7 @@ The following steps assume you have [Git](https://git-scm.com/) and [Docker](htt
    | status                       |
    | user_types                   |
    | users                        |
+   | vmq_auth_acl                 |
    +------------------------------+
    ```
 
