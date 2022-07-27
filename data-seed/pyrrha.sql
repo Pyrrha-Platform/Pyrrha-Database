@@ -415,6 +415,28 @@ LOCK TABLES `users` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+-- Table for VerneMQ MQTT broker authentication
+DROP TABLE IF EXISTS `vmq_auth_acl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vmq_auth_acl`
+(
+  `mountpoint` VARCHAR(10) NOT NULL,
+  `client_id` VARCHAR(128) NOT NULL,
+  `username` VARCHAR(128) NOT NULL,
+  `password` VARCHAR(128),
+  `publish_acl` TEXT,
+  `subscribe_acl` TEXT,
+  CONSTRAINT `vmq_auth_acl_primary_key` PRIMARY KEY (`mountpoint`, `client_id`, `username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `vmq_auth_acl` WRITE;
+/*!40000 ALTER TABLE `vmq_auth_acl` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vmq_auth_acl` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
