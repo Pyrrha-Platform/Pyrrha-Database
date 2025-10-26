@@ -15,7 +15,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pyrrha` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pyrrha` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
 USE `pyrrha`;
 
@@ -31,7 +31,7 @@ CREATE TABLE `event_types` (
   `event_description` varchar(20) NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`event_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `events` (
   CONSTRAINT `fk_event_type` FOREIGN KEY (`event_type`) REFERENCES `event_types` (`event_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_fuel_type` FOREIGN KEY (`fuel_type`) REFERENCES `fuel_types` (`fuel_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_status` FOREIGN KEY (`status`) REFERENCES `status` (`statusid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `events_firefighters_devices` (
   CONSTRAINT `fk_events` FOREIGN KEY (`event_internal_id`) REFERENCES `events` (`event_internal_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_firefighters` FOREIGN KEY (`firefighter_id`) REFERENCES `firefighters` (`firefighter_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_devices` FOREIGN KEY (`device_id`) REFERENCES `devices` (`device_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `feedback` (
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`firefighter_id`,`fire_id`),
   CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`firefighter_id`) REFERENCES `firefighters` (`firefighter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +161,7 @@ CREATE TABLE `firefighter_device_log` (
   `device_timestamp` timestamp NULL DEFAULT NULL,
   `device_status_LED` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`timestamp_mins`,`firefighter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +247,7 @@ CREATE TABLE `firefighter_status_analytics` (
   `benzene_gauge_240min` smallint(6) DEFAULT NULL,
   `benzene_gauge_480min` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`timestamp_mins`,`firefighter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,7 +276,7 @@ CREATE TABLE `firefighters` (
   `email` varchar(40) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`firefighter_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +300,7 @@ CREATE TABLE `fuel_types` (
   `fuel_description` varchar(20) NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`fuel_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +326,7 @@ CREATE TABLE `devices` (
   `version` varchar(20) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`device_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +350,7 @@ CREATE TABLE `status` (
   `status_description` varchar(20) NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`statusid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -374,7 +374,7 @@ CREATE TABLE `user_types` (
   `description` varchar(20) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,7 +402,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   KEY `user_type` (`user_type`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`user_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -428,7 +428,7 @@ CREATE TABLE `vmq_auth_acl`
   `publish_acl` TEXT,
   `subscribe_acl` TEXT,
   CONSTRAINT `vmq_auth_acl_primary_key` PRIMARY KEY (`mountpoint`, `client_id`, `username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `vmq_auth_acl` WRITE;
