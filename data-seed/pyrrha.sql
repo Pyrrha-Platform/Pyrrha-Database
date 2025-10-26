@@ -54,8 +54,8 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
-  `event_internal_id` int(11) NOT NULL AUTO_INCREMENT,
-  `event_code` varchar(20) DEFAULT NULL,
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `event_type` int(11) DEFAULT NULL,
   `fuel_type` int(11) DEFAULT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `events` (
   `extra_info` varchar(200) DEFAULT NULL,
   `location` point DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`event_internal_id`),
+  PRIMARY KEY (`event_id`),
   KEY `fk_event_type_idx` (`event_type`),
   KEY `fk_event_type_idx1` (`fuel_type`),
   KEY `fk_status_idx` (`status`),
@@ -92,13 +92,13 @@ DROP TABLE IF EXISTS `events_firefighters_devices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_firefighters_devices` (
-  `event_internal_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
   `firefighter_id` int(11) NOT NULL,
   `device_id` int(11) NOT NULL,
-  PRIMARY KEY (`event_internal_id`,`firefighter_id`,`device_id`),
+  PRIMARY KEY (`event_id`,`firefighter_id`,`device_id`),
   KEY `fk_firefighters_idx` (`firefighter_id`),
   KEY `fk_devices_idx` (`device_id`),
-  CONSTRAINT `fk_events` FOREIGN KEY (`event_internal_id`) REFERENCES `events` (`event_internal_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_events` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_firefighters` FOREIGN KEY (`firefighter_id`) REFERENCES `firefighters` (`firefighter_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_devices` FOREIGN KEY (`device_id`) REFERENCES `devices` (`device_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -364,9 +364,10 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` (status_description) VALUES ('Planned');
-INSERT INTO `status` (status_description) VALUES ('Unplanned');
-INSERT INTO `status` (status_description) VALUES ('Completed');
+INSERT INTO `status` (status_id, status_description) VALUES (1, 'Planned');
+INSERT INTO `status` (status_id, status_description) VALUES (2, 'Active');
+INSERT INTO `status` (status_id, status_description) VALUES (3, 'Completed');
+INSERT INTO `status` (status_id, status_description) VALUES (4, 'Cancelled');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
