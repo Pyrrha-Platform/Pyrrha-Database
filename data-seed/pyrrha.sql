@@ -6118,11 +6118,11 @@ DROP TABLE IF EXISTS `user_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_types` (
-  `user_type` int(11) NOT NULL AUTO_INCREMENT,
+  `user_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(20) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`user_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`user_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -6132,6 +6132,9 @@ CREATE TABLE `user_types` (
 LOCK TABLES `user_types` WRITE;
 /*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
 set autocommit=0;
+INSERT INTO `user_types` VALUES
+(1,'Admin',NULL),
+(2,'Regular',NULL);
 /*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -6147,12 +6150,12 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `surname` varchar(40) DEFAULT NULL,
-  `user_type` int(11) DEFAULT NULL,
+  `user_type_id` int(11) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  KEY `user_type` (`user_type`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`user_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `user_type_id` (`user_type_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type_id`) REFERENCES `user_types` (`user_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -6162,6 +6165,9 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 set autocommit=0;
+INSERT INTO `users` VALUES
+(1,'Admin','User',1,NULL),
+(2,'Regular','User',2,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -6191,6 +6197,12 @@ CREATE TABLE `vmq_auth_acl` (
 LOCK TABLES `vmq_auth_acl` WRITE;
 /*!40000 ALTER TABLE `vmq_auth_acl` DISABLE KEYS */;
 set autocommit=0;
+INSERT INTO `vmq_auth_acl` VALUES
+('','Prometeo:00:00:00:00:00:01','Prometeo:00:00:00:00:00:01','0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e','[{\"pattern\":\"iot-2/#\"}]',NULL),
+('','Prometeo:00:00:00:00:00:02','Prometeo:00:00:00:00:00:02','6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4','[{\"pattern\":\"iot-2/#\"}]',NULL),
+('','Prometeo:00:00:00:00:00:03','Prometeo:00:00:00:00:00:03','5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764','[{\"pattern\":\"iot-2/#\"}]',NULL),
+('','Prometeo:00:00:00:00:00:04','Prometeo:00:00:00:00:00:04','b97873a40f73abedd8d685a7cd5e5f85e4a9cfb83eac26886640a0813850122b','[{\"pattern\":\"iot-2/#\"}]',NULL),
+('','someclientid','username','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',NULL,'[{\"pattern\":\"iot-2/#\"}]');
 /*!40000 ALTER TABLE `vmq_auth_acl` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -6208,4 +6220,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-10-26 15:36:56
+-- Dump completed on 2025-10-26 16:20:53
