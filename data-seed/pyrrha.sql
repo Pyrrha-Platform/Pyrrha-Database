@@ -27,10 +27,11 @@ DROP TABLE IF EXISTS `event_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_types` (
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `event_type` int(11) NOT NULL,
   `event_description` varchar(20) NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`event_type`)
+  PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,6 +41,8 @@ CREATE TABLE `event_types` (
 
 LOCK TABLES `event_types` WRITE;
 /*!40000 ALTER TABLE `event_types` DISABLE KEYS */;
+INSERT INTO `event_types` (event_type, event_description) VALUES (1, 'Prescribed burn');
+INSERT INTO `event_types` (event_type, event_description) VALUES (2, 'Wildfire');
 /*!40000 ALTER TABLE `event_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,9 +69,9 @@ CREATE TABLE `events` (
   KEY `fk_event_type_idx` (`event_type`),
   KEY `fk_event_type_idx1` (`fuel_type`),
   KEY `fk_status_idx` (`status`),
-  CONSTRAINT `fk_event_type` FOREIGN KEY (`event_type`) REFERENCES `event_types` (`event_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fuel_type` FOREIGN KEY (`fuel_type`) REFERENCES `fuel_types` (`fuel_type`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_status` FOREIGN KEY (`status`) REFERENCES `status` (`statusid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_event_type` FOREIGN KEY (`event_type`) REFERENCES `event_types` (`event_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_fuel_type` FOREIGN KEY (`fuel_type`) REFERENCES `fuel_types` (`fuel_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_status` FOREIGN KEY (`status`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -159,7 +162,7 @@ CREATE TABLE `firefighter_device_log` (
   `acrolein` float DEFAULT NULL,
   `benzene` float DEFAULT NULL,
   `device_timestamp` timestamp NULL DEFAULT NULL,
-  `device_status_LED` smallint(6) DEFAULT NULL,
+  `device_status_led` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`timestamp_mins`,`firefighter_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -194,8 +197,8 @@ CREATE TABLE `firefighter_status_analytics` (
   `acrolein` float DEFAULT NULL,
   `benzene` float DEFAULT NULL,
   `device_timestamp` timestamp NULL DEFAULT NULL,
-  `device_status_LED` smallint(6) DEFAULT NULL,
-  `analytics_status_LED` smallint(6) DEFAULT NULL,
+  `device_status_led` smallint(6) DEFAULT NULL,
+  `analytics_status_led` smallint(6) DEFAULT NULL,
   `carbon_monoxide_twa_10min` float DEFAULT NULL,
   `carbon_monoxide_twa_30min` float DEFAULT NULL,
   `carbon_monoxide_twa_60min` float DEFAULT NULL,
@@ -296,10 +299,11 @@ DROP TABLE IF EXISTS `fuel_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fuel_types` (
+  `fuel_id` int(11) NOT NULL AUTO_INCREMENT,
   `fuel_type` int(11) NOT NULL,
   `fuel_description` varchar(20) NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`fuel_type`)
+  PRIMARY KEY (`fuel_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -309,6 +313,7 @@ CREATE TABLE `fuel_types` (
 
 LOCK TABLES `fuel_types` WRITE;
 /*!40000 ALTER TABLE `fuel_types` DISABLE KEYS */;
+INSERT INTO `fuel_types` (fuel_type, fuel_description) VALUES (1, 'Default fuel');
 /*!40000 ALTER TABLE `fuel_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,10 +351,10 @@ DROP TABLE IF EXISTS `status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status` (
-  `statusid` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL AUTO_INCREMENT,
   `status_description` varchar(20) NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`statusid`)
+  PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -359,6 +364,9 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
+INSERT INTO `status` (status_description) VALUES ('Planned');
+INSERT INTO `status` (status_description) VALUES ('Unplanned');
+INSERT INTO `status` (status_description) VALUES ('Completed');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
