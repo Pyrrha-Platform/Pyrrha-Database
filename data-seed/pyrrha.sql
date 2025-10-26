@@ -107,7 +107,7 @@ CREATE TABLE `events` (
   CONSTRAINT `fk_event_type` FOREIGN KEY (`event_type`) REFERENCES `event_types` (`event_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_fuel_type` FOREIGN KEY (`fuel_type`) REFERENCES `fuel_types` (`fuel_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_status` FOREIGN KEY (`status`) REFERENCES `status` (`status_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +117,10 @@ CREATE TABLE `events` (
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 set autocommit=0;
+INSERT INTO `events` VALUES
+(1,'Training Session',3,1,1,'2025-10-20','09:00:00','12:00:00','Fire safety training',NULL,NULL),
+(2,'Warehouse Fire',2,2,1,'2025-10-25','14:30:00',NULL,'Active emergency',NULL,NULL),
+(3,'Maintenance',1,1,1,'2025-10-28','08:00:00','10:00:00','Sensor calibration',NULL,NULL);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -6234,4 +6238,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-10-26 20:55:23
+-- Dump completed on 2025-10-26 21:45:37
