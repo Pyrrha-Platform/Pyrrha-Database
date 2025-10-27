@@ -6223,7 +6223,7 @@ INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl)
 INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:02', 'Prometeo:00:00:00:00:00:02', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
 INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:03', 'Prometeo:00:00:00:00:00:03', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
 INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:04', 'Prometeo:00:00:00:00:00:04', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
-INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'someclientid', 'username', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
+INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl, subscribe_acl) VALUES ('', 'someclientid', 'username', SHA2('password', 256), '[{"pattern":"iot-2/#"}]', '[{"pattern":"iot-2/#"}]');
 /*!40000 ALTER TABLE `vmq_auth_acl` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
