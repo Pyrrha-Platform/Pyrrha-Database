@@ -5,6 +5,10 @@
 -- ------------------------------------------------------
 -- Server version	12.0.2-MariaDB
 
+-- Create the database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS pyrrha;
+USE pyrrha;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -6215,12 +6219,11 @@ CREATE TABLE `vmq_auth_acl` (
 LOCK TABLES `vmq_auth_acl` WRITE;
 /*!40000 ALTER TABLE `vmq_auth_acl` DISABLE KEYS */;
 set autocommit=0;
-INSERT INTO `vmq_auth_acl` VALUES
-('','Prometeo:00:00:00:00:00:01','Prometeo:00:00:00:00:00:01','0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e','[{\"pattern\":\"iot-2/#\"}]',NULL),
-('','Prometeo:00:00:00:00:00:02','Prometeo:00:00:00:00:00:02','6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4','[{\"pattern\":\"iot-2/#\"}]',NULL),
-('','Prometeo:00:00:00:00:00:03','Prometeo:00:00:00:00:00:03','5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764','[{\"pattern\":\"iot-2/#\"}]',NULL),
-('','Prometeo:00:00:00:00:00:04','Prometeo:00:00:00:00:00:04','b97873a40f73abedd8d685a7cd5e5f85e4a9cfb83eac26886640a0813850122b','[{\"pattern\":\"iot-2/#\"}]',NULL),
-('','someclientid','username','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',NULL,'[{\"pattern\":\"iot-2/#\"}]');
+INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:01', 'Prometeo:00:00:00:00:00:01', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
+INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:02', 'Prometeo:00:00:00:00:00:02', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
+INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:03', 'Prometeo:00:00:00:00:00:03', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
+INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'Prometeo:00:00:00:00:00:04', 'Prometeo:00:00:00:00:00:04', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
+INSERT INTO vmq_auth_acl(mountpoint, client_id, username, password, publish_acl) VALUES ('', 'someclientid', 'username', SHA2('password', 256), '[{"pattern":"iot-2/#"}]');
 /*!40000 ALTER TABLE `vmq_auth_acl` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
