@@ -1,22 +1,55 @@
-name: linter
+name: Infrastructure Linting
 
 on:
-  # Execute on every push to any branch
   push:
-    branches:
-      - "**"
-
+    branches: ["**"]
+  pull_request_target:
+    branches: [main]
 
 jobs:
-  linter:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install -g dockerfilelint prettier@latest
-      - run: dockerfilelint Dockerfile
-      - run: prettier --check "**/*.md"
+
+      # Infrastructure Linting
+      - name: Install linting tools
+        run: npm install -g dockerfilelint prettier
+
+      - name: Dockerfile linting
+        run: |
+          if ls Dockerfile* 1> /dev/null 2>&1; then
+            dockerfilelint Dockerfile*
+          else
+            echo "No Dockerfiles found, skipping"
+          fi
+
+      - name: Format check for documentation
+        run: |
+          # Use centralized prettier config if available
+          if [ -f "../Pyrrha-Development-Tools/configs/.prettierrc.js" ]; then
+            npx prettier --config ../Pyrrha-Development-Tools/configs/.prettierrc.js --check "**/*.{md,json,yml,yaml}"
+          else
+            npx prettier --check "**/*.{md,json,yml,yaml}"
+          fi
+
+      - name: SQL file validation
+        run: |
+          SQL_FILES=$(find . -name "*.sql" | grep -v ".git")
+          if [ -n "$SQL_FILES" ]; then
+            echo "📊 SQL files found:"
+            for file in $SQL_FILES; do
+              echo "   📄 $file"
+              # Basic SQL syntax check
+              if ! grep -q ";" "$file"; then
+                echo "⚠️ $file may be missing semicolon terminators"
+              fi
+            done
+          else
+            echo "No SQL files found"
+          fi
