@@ -6066,8 +6066,8 @@ set autocommit=0;
 INSERT INTO `firefighters` VALUES
 (1,'FF-2025-001','Jordi','Puigdemont i Serra','jordi.puigdemont@bombers.cat',NULL),
 (2,'FF-2025-002','Montserrat','Vidal i Ribas','montse.vidal@bombers.cat',NULL),
-(3,'FF-2025-003','Xavier','CastellÃ  i Font','xavier.castella@bombers.cat',NULL),
-(4,'FF-2025-004','NÃºria','MartÃ­ i SolÃ ','nuria.marti@bombers.cat',NULL);
+(3,'FF-2025-003','Xavier','Castellà i Font','xavier.castella@bombers.cat',NULL),
+(4,'FF-2025-004','Núria','Martí i Solà','nuria.marti@bombers.cat',NULL);
 /*!40000 ALTER TABLE `firefighters` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
